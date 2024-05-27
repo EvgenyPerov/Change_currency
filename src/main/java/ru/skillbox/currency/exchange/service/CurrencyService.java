@@ -3,6 +3,7 @@ package ru.skillbox.currency.exchange.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.skillbox.currency.exchange.dto.AllCurrenciesDto;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
 import ru.skillbox.currency.exchange.entity.Currency;
 import ru.skillbox.currency.exchange.mapper.CurrencyMapper;
@@ -12,12 +13,14 @@ import ru.skillbox.currency.exchange.repository.CurrencyRepository;
 @Service
 @RequiredArgsConstructor
 public class CurrencyService {
+
     private final CurrencyMapper mapper;
     private final CurrencyRepository repository;
 
     public CurrencyDto getById(Long id) {
         log.info("CurrencyService method getById executed");
-        Currency currency = repository.findById(id).orElseThrow(() -> new RuntimeException("Currency not found with id: " + id));
+        Currency currency = repository.findById(id).orElseThrow(() ->
+            new RuntimeException("Currency not found with id: " + id));
         return mapper.convertToDto(currency);
     }
 
@@ -30,5 +33,15 @@ public class CurrencyService {
     public CurrencyDto create(CurrencyDto dto) {
         log.info("CurrencyService method create executed");
         return  mapper.convertToDto(repository.save(mapper.convertToEntity(dto)));
+    }
+
+    public AllCurrenciesDto getAllCurrency() {
+        AllCurrenciesDto response = new AllCurrenciesDto();
+        repository.findAll().forEach(item ->
+            response.getCurrencies().add(AllCurrenciesDto.ItemCurrency.builder()
+                    .name(item.getName())
+                    .value(item.getValue())
+                .build()));
+        return response;
     }
 }

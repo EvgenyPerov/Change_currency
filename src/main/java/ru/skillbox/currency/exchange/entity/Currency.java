@@ -16,19 +16,33 @@ public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     @SequenceGenerator(name = "sequence", sequenceName = "create_sequence", allocationSize = 0)
-    @Column(name = "id")
+    @Column
     private Long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
-    @Column(name = "nominal")
+    @Column
     private Long nominal;
 
-    @Column(name = "value")
+    @Column
     private Double value;
 
-    @Column(name = "iso_num_code")
+    @Column
     private Long isoNumCode;
 
+    @Column
+    private String isoCharCode;
+
+    @Override
+    public String toString() {
+        return "Currency{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", nominal=" + nominal +
+            ", value=" + value +
+            ", isoNumCode=" + isoNumCode +
+            ", isoCharCode='" + isoCharCode + '\'' +
+            '}';
+    }
 }

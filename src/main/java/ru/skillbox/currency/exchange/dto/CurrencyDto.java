@@ -1,14 +1,8 @@
 package ru.skillbox.currency.exchange.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class CurrencyDto {
     private Long id;
 
@@ -19,4 +13,6 @@ public class CurrencyDto {
     private Double value;
 
     private Long isoNumCode;
+
+    private String isoCharCode;
 }
